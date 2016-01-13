@@ -4,8 +4,10 @@
   "description": "Crowdsourcing app for Module 4 at Turing school of software & design",
   "main": "client.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "nodemon server.js"
   },
+  "repository": "https://github.com/RickBacci/crowdsource",
   "keywords": [
     "web-sockets",
     "Node",
@@ -13,5 +15,14 @@
     "JQuery"
   ],
   "author": "Rick Bacci",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.3",
+    "lodash": "^3.10.1",
+    "socket.io": "^1.3.7"
+  },
+  "devDependencies": {
+    "nodemon": "^1.8.1",
+    "pryjs": "^0.1.3"
+  }
 }
