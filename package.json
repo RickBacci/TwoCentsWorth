@@ -1,0 +1,17 @@
+{
+  "name": "crowdsource",
+  "version": "1.7.5",
+  "description": "Crowdsourcing app for Module 4 at Turing school of software & design",
+  "main": "client.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "web-sockets",
+    "Node",
+    "Mocha",
+    "JQuery"
+  ],
+  "author": "Rick Bacci",
+  "license": "MIT"
+}
