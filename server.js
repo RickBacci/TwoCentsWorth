@@ -10,9 +10,13 @@ app.get('/', function (req, res){
 
 var port   = process.env.PORT || 3000;
 
-app.listen(port, function () {
-  console.log('CrowdSource app listening on port ' + port + '!');
-})
+var server = http.createServer(app).listen(port, function () {
+  console.log('Listening on port ' + port + '.');
+});
+
+const socketIo = require('socket.io');
+const io       = socketIo(server);
 
 
-module.exports = app;
+
+module.exports = server;

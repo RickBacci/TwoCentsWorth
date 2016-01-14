@@ -1,3 +1,5 @@
+var socket = io();
+
 var submitPoll = document.getElementById('submit-poll');
 
 submitPoll.addEventListener('click', function(event) {
