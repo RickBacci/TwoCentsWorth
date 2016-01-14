@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CrowdSource</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <br>
+      <div id="admin-url"></div>
+      <div id="voter-url"></div>
+      <br>
+      <h2>CrowdSource</h2>
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <label for="question">Question:</label>
+          <input type="text" class="form-control" id="question" placeholder="Enter poll question">
+        </div>
+        <div class="form-group">
+          <label for="choiceA">A:</label>
+          <input type="text" class="form-control" id="choice-A" placeholder="Enter choice">
+        </div>
+        <div class="form-group">
+          <label for="choiceC">B:</label>
+          <input type="text" class="form-control" id="choice-B" placeholder="Enter choice">
+        </div>
+        <div class="form-group">
+          <label for="choiceD">C:</label>
+          <input type="text" class="form-control" id="choice-C" placeholder="Enter choice">
+        </div>
+        <div class="form-group">
+          <label for="choiceD">D:</label>
+          <input type="text" class="form-control" id="choice-D" placeholder="Enter choice">
+        </div>
+        <button type="submit" class="btn btn-default" id="submit-poll">Submit Poll</button>
+      </form>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </body>
+</html>
+

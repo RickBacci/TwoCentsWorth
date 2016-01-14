@@ -11,6 +11,10 @@ app.get('/', function (request, response){
   response.sendFile(__dirname + '/public/index.html');
 });
 
+app.get('/admin/:id', (request, response) => {
+  response.sendFile(__dirname + '/public/admin.html')
+});
+
 var port   = process.env.PORT || 3000;
 var server = http.createServer(app).listen(port, function () {
   console.log('Listening on port ' + port + '.');
@@ -32,6 +36,8 @@ io.on('connection', function(socket) {
       }
       socket.emit('urls', { admin: adminString, voter: voterString });
 
+      // TODO: want to redirect back to the new admin url to show the poll,
+      // or have a button to view results
     }
   });
 });
