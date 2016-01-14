@@ -17,8 +17,11 @@
   "author": "Rick Bacci",
   "license": "MIT",
   "dependencies": {
+    "expect.js": "^0.3.1",
     "express": "^4.13.3",
     "lodash": "^3.10.1",
+    "mocha": "^2.3.4",
+    "request": "^2.67.0",
     "socket.io": "^1.3.7"
   },
   "devDependencies": {
