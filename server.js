@@ -12,16 +12,8 @@ if (process.env.REDISTOGO_URL) {
   var redis = require("redis").createClient();
 }
 
-redis.on("error", function (err) {
-  console.log("Error " + err);
-});
-
-redis.on('connect', function() {
-  console.log('connected');
-});
-
-
-var polls   = {};
+redis.on("error", function (err) { console.log("Error " + err); });
+redis.on('connect', function() { console.log('connected'); });
 
 app.use(bodyParser.urlencoded({extended: true}));
 
