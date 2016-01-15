@@ -4,7 +4,6 @@ var app        = express();
 var crypto     = require('crypto');
 var bodyParser = require('body-parser')
 
-
 if (process.env.REDISTOGO_URL) {
   var rtg   = require("url").parse(process.env.REDISTOGO_URL);
   var redis = require("redis").createClient(rtg.port, rtg.hostname);
@@ -72,7 +71,7 @@ app.get('/polls/:id', function(request, response) {
   var id = request.params.id;
 
   redis.hgetall("polls", function (err, obj) {
-    console.dir(obj);
+    console.log('This is the status: ' + obj.status)
   });
   response.sendFile(__dirname + '/public/poll.html');
 
