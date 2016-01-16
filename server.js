@@ -25,7 +25,7 @@ app.get('/', function(request, response) {
 
 app.post('/polls', function(request, response) {
   var pollType    = request.body.polltype;
-  var status      = request.body.status || 'open';
+  var status      = 'open';
   var adminString = randomString();
   var voterString = randomString();
   var question    = request.body.question;
