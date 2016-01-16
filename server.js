@@ -23,7 +23,6 @@ app.get('/', function(request, response) {
   response.sendFile(__dirname + '/public/index.html');
 });
 
-
 app.post('/polls', function(request, response) {
   var pollType    = request.body.polltype;
   var status      = request.body.status || 'open';
