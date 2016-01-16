@@ -1,0 +1,30 @@
+doctype html
+html(lang='en')
+  head
+    title CrowdSource
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+  body
+    .container-fluid
+      .row
+        .col-md-8.col-md-offset-2
+          h1.text-center CrowdSource
+          form.form(action='/polls', method='post', role='form')
+            .form-group
+              input#type.form-control(name='polltype', placeholder='Enter poll type')
+            .form-group
+              input#endtime.form-control(name='endtime', placeholder='Enter poll end time')
+            .form-group
+              input#question.form-control(name='question', placeholder='Enter poll question')
+            .form-group
+              input#choice-A.form-control(name='poll[choices][]', placeholder='Enter choice')
+            .form-group
+              input#choice-C.form-control(name='poll[choices][]', placeholder='Enter choice')
+            .form-group
+              input#choice-D.form-control(name='poll[choices][]', placeholder='Enter choice')
+            button#submit-poll.btn.btn-default.pull-right(type='submit') Submit Poll
+    script(src='/socket.io/socket.io.js')
+    script(src='/client.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
