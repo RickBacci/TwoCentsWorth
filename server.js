@@ -21,7 +21,6 @@ app.set('view engine', 'jade');
 app.use(express.static('public'));
 
 app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/public/index.html');
   response.render('index')
 });
 
@@ -62,16 +61,15 @@ app.post('/polls', function(request, response) {
 
 app.get('/polls/:id', function(request, response) {
   var id = request.params.id;
-  var poll;
 
-  redis.hgetall("polls", function (err, obj) {
-    console.log("Poll created: " + obj);
-    poll = obj;
+  redis.hgetall("polls", function (err, poll) {
 
-   var fileName = __dirname + "/public/poll.html"
+    var host = request.protocol + '://' + request.get('host') + "/polls/"
 
-   response.render('poll')
+    poll.adminUrl = host + poll.adminString
+    poll.voterUrl = host + poll.voterString
 
+    response.render('poll', { poll: poll })
   });
 
 });
