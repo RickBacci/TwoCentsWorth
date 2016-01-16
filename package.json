@@ -20,6 +20,7 @@
     "body-parser": "^1.14.2",
     "expect.js": "^0.3.1",
     "express": "^4.13.3",
+    "jade": "^1.11.0",
     "lodash": "^3.10.1",
     "mocha": "^2.3.4",
     "nightwatch": "^0.8.15",

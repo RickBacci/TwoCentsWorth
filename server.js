@@ -17,10 +17,11 @@ redis.on('connect', function() { console.log('connected'); });
 
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.set('view engine', 'jade');
 app.use(express.static('public'));
 
 app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/public/index.html');
+  response.render('index')
 });
 
 app.post('/polls', function(request, response) {
@@ -61,10 +62,15 @@ app.post('/polls', function(request, response) {
 app.get('/polls/:id', function(request, response) {
   var id = request.params.id;
 
-  redis.hgetall("polls", function (err, obj) {
-    console.log('This is the status: ' + obj.status)
+  redis.hgetall("polls", function (err, poll) {
+
+    var host = request.protocol + '://' + request.get('host') + "/polls/"
+
+    poll.adminUrl = host + poll.adminString
+    poll.voterUrl = host + poll.voterString
+
+    response.render('poll', { poll: poll })
   });
-  response.sendFile(__dirname + '/public/poll.html');
 
 });
 
