@@ -14,7 +14,7 @@ if (process.env.REDISTOGO_URL) {
 }
 
 redis.on("error", function (err) { console.log("Error " + err); });
-redis.on('connect', function() { console.log('connected'); });
+redis.on('connect', function() { console.log('Redis server connected'); });
 
 app.use(bodyParser.urlencoded({extended: true}));
 
