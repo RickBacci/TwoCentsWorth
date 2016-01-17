@@ -3,6 +3,7 @@ var express    = require('express');
 var app        = express();
 var crypto     = require('crypto');
 var bodyParser = require('body-parser')
+var randomString = require('./random-string');
 
 if (process.env.REDISTOGO_URL) {
   var rtg   = require("url").parse(process.env.REDISTOGO_URL);
@@ -81,11 +82,6 @@ var port   = process.env.PORT || 3000;
 var server = http.createServer(app).listen(port, function () {
   console.log('Listening on port ' + port + '.');
 });
-
-
-function randomString() {
-  return crypto.randomBytes(10).toString('hex');
-}
 
 
 module.exports = server;
