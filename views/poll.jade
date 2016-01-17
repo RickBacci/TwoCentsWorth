@@ -1,18 +1,48 @@
-html
+doctype html
+html(lang='en')
+  head
     title TwoCentsWorth
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    style.
+      .btn-choice:active, .active {
+        background-color:blue;
+      }
+      body {
+          background-color: #c9c9c9;
+      }
   body
-    h1 Poll Show page
-    br
-    a.admin-url(href= poll.adminUrl)=poll.adminUrl
-    br
-    a.voter-url(href= poll.voterUrl)=poll.voterUrl
-    br
-    .question=poll.question
-    br
-    ul#poll
-      each val, index in poll.choices
-        li(class='choice-'+index)= val
-    br
-    a(href='/') Back
-    br
-    =poll.choices
+    .container-fluid
+      .row
+        .col-md-8.col-md-offset-2
+          nav.navbar.navbar-inverse
+            .container-fluid
+              .navbar-header
+                a.navbar-brand(href='/') TwoCentsWorth
+              ul.nav.navbar-nav.navbar-right
+                li
+                  a(href='/') Home
+          h1.text-center Poll Show page
+          #poll-urls
+            .well
+              h3.text-center Admin Link
+                p.text-center
+                a.admin-url(class='text-center', href= poll.adminUrl)=poll.adminUrl
+              h3.text-center Voter Link
+                p.text-center
+                a.voter-url(href= poll.voterUrl)=poll.voterUrl
+          .well.text-center
+            .panel
+              h3 Question
+              p#question=poll.question
+          .well
+            #choices
+              each val, index in poll.choices
+                button.btn.btn-block.btn-default.button-choice(class='choice-' + index)=val
+    script.
+      $('.uiButton').click(function() {
+          $(this).toggleClass("active");
+      });
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
