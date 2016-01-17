@@ -2,7 +2,23 @@
   "name": "TwoCentsWorth",
   "version": "1.7.5",
   "description": "Crowdsourcing app for Module 4 at Turing school of software & design",
-  "main": "client.js",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "bootstrap": "^3.3.6",
+    "expect.js": "^0.3.1",
+    "express": "^4.13.3",
+    "hiredis": "^0.4.1",
+    "jade": "^1.11.0",
+    "jquery": "^2.2.0",
+    "lodash": "^3.10.1",
+    "mocha": "^2.3.4",
+    "net": "^1.0.2",
+    "nightwatch": "^0.8.15",
+    "redis": "^2.4.2",
+    "socket.io": "^1.4.4",
+    "webpack": "^1.12.11"
+  },
   "scripts": {
     "test": "nightwatch --test tests/features/*.js",
     "start": "nodemon server.js"
@@ -16,18 +32,6 @@
   ],
   "author": "Rick Bacci",
   "license": "MIT",
-  "dependencies": {
-    "body-parser": "^1.14.2",
-    "expect.js": "^0.3.1",
-    "express": "^4.13.3",
-    "jade": "^1.11.0",
-    "lodash": "^3.10.1",
-    "mocha": "^2.3.4",
-    "nightwatch": "^0.8.15",
-    "redis": "^2.4.2",
-    "request": "^2.67.0",
-    "socket.io": "^1.4.4"
-  },
   "devDependencies": {
     "nodemon": "^1.8.1",
     "pryjs": "^0.1.3"
