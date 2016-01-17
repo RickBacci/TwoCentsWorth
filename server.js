@@ -30,7 +30,7 @@ app.post('/polls', function(request, response) {
   var adminString = randomString();
   var voterString = randomString();
   var question    = request.body.question;
-  var choices     = request.body.poll;
+  var choices     = request.body.poll.choices;
   var endTime     = request.body.endtime;
 
   var poll = {
@@ -69,7 +69,10 @@ app.get('/polls/:id', function(request, response) {
     poll.adminUrl = host + poll.adminString
     poll.voterUrl = host + poll.voterString
 
+
+    poll.choices = poll.choices.split(',')
     response.render('poll', { poll: poll })
+
   });
 
 });

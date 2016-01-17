@@ -4,7 +4,7 @@
   "description": "Crowdsourcing app for Module 4 at Turing school of software & design",
   "main": "client.js",
   "scripts": {
-    "test": "mocha",
+    "test": "nightwatch --test tests/features/*.js",
     "start": "nodemon server.js"
   },
   "repository": "https://github.com/RickBacci/crowdsource",
@@ -23,6 +23,7 @@
     "jade": "^1.11.0",
     "lodash": "^3.10.1",
     "mocha": "^2.3.4",
+    "nightwatch": "^0.8.15",
     "redis": "^2.4.2",
     "request": "^2.67.0",
     "socket.io": "^1.4.4"
