@@ -1,9 +1,8 @@
-const http     = require('http');
-var express    = require('express');
-var app        = express();
-var crypto     = require('crypto');
-var bodyParser = require('body-parser')
+const http       = require('http');
+var express      = require('express');
+var app          = express();
 var randomString = require('./random-string');
+var bodyParser   = require('body-parser');
 
 if (process.env.REDISTOGO_URL) {
   var rtg   = require("url").parse(process.env.REDISTOGO_URL);
