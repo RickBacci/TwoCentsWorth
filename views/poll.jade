@@ -2,9 +2,14 @@ html
   body
     h1 Poll Show page
     br
-    a(href= poll.adminUrl)=poll.adminUrl
+    a.admin-url(href= poll.adminUrl)=poll.adminUrl
     br
-    a(href= poll.voterUrl)=poll.voterUrl
+    a.voter-url(href= poll.voterUrl)=poll.voterUrl
     br
+    ul#poll
+      each val in poll.choices
+        li= val
     br
     a(href='/') Back
+    br
+    =poll.choices

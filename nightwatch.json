@@ -17,7 +17,6 @@
       "webdriver.ie.driver" : ""
     }
   },
-
   "test_settings" : {
     "default" : {
       "launch_url" : "http://localhost",
@@ -32,7 +31,8 @@
         "browserName": "firefox",
         "javascriptEnabled": true,
         "acceptSslCerts": true
-      }
+      },
+      "exclude" : "./tests/unit/*"
     },
 
     "chrome" : {

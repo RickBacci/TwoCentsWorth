@@ -12,5 +12,12 @@ To run selenium, do: selenium-server -port 4444
 
 For more options: selenium-server -help
 
-To run Nightwatch: nightwatch --test tests/features/test.js
+To run feature tests:
 
+nightwatch --group features
+or
+npm test
+
+To run unit tests:
+
+mocha tests/unit/*

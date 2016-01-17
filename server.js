@@ -30,7 +30,7 @@ app.post('/polls', function(request, response) {
   var adminString = randomString();
   var voterString = randomString();
   var question    = request.body.question;
-  var choices     = request.body.poll;
+  var choices     = request.body.poll.choices;
   var endTime     = request.body.endtime;
 
   var poll = {
