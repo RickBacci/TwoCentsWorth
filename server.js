@@ -16,8 +16,8 @@ redis.on("error", function (err) { console.log("Error " + err); });
 redis.on('connect', function() { console.log('Redis server connected'); });
 
 app.use(bodyParser.urlencoded({extended: true}));
-
 app.set('view engine', 'jade');
+
 app.use(express.static('public'));
 
 app.get('/', function(request, response) {
@@ -25,22 +25,17 @@ app.get('/', function(request, response) {
 });
 
 app.post('/polls', function(request, response) {
-  var pollType    = request.body.polltype;
-  var status      = 'open';
   var adminString = randomString();
   var voterString = randomString();
-  var question    = request.body.question;
-  var choices     = request.body.poll.choices;
-  var endTime     = request.body.endtime;
 
   var poll = {
-    'pollType': pollType,
-    'status': status,
+    'pollType': request.body.polltype,
+    'status': 'open',
     'adminString': adminString,
     'voterString': voterString,
-    'question': question,
-    'choices': choices,
-    'endTime': endTime
+    'question': request.body.question,
+    'choices': request.body.poll.choices,
+    'endTime': request.body.endtime
   };
 
   redis.hmset('polls', poll)
@@ -61,6 +56,8 @@ app.post('/polls', function(request, response) {
 
 app.get('/polls/:id', function(request, response) {
   var id = request.params.id;
+
+  // TODO use id to actually find what i'm looking for :)
 
   redis.hgetall("polls", function (err, poll) {
 
