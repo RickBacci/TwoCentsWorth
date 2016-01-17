@@ -6,9 +6,11 @@ html
     br
     a.voter-url(href= poll.voterUrl)=poll.voterUrl
     br
+    .question=poll.question
+    br
     ul#poll
-      each val in poll.choices
-        li= val
+      each val, index in poll.choices
+        li(class='choice-'+index)= val
     br
     a(href='/') Back
     br

@@ -16,11 +16,11 @@ module.exports = {
     client.pause(1000)
     client.expect.element('.admin-url').text.to.contain('localhost');
     client.expect.element('.voter-url').text.to.contain('localhost');
-    client.expect.element('#question').text.to.contain('Why?');
-    client.expect.element('#choice-A').text.to.contain('choiceA');
-    client.expect.element('#choice-B').text.to.contain('choiceB');
-    client.expect.element('#choice-C').text.to.contain('choiceC');
-    client.expect.element('#choice-D').text.to.contain('choiceD');
+    client.expect.element('.question').text.to.contain('Why?');
+    client.expect.element('.choice-0').text.to.contain('choiceA');
+    client.expect.element('.choice-1').text.to.contain('choiceB');
+    client.expect.element('.choice-2').text.to.contain('choiceC');
+    client.expect.element('.choice-3').text.to.contain('choiceD');
     client.end();
   }
 };

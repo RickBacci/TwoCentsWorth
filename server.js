@@ -69,7 +69,10 @@ app.get('/polls/:id', function(request, response) {
     poll.adminUrl = host + poll.adminString
     poll.voterUrl = host + poll.voterString
 
+
+    poll.choices = poll.choices.split(',')
     response.render('poll', { poll: poll })
+
   });
 
 });
