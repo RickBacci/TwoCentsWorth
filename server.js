@@ -67,16 +67,22 @@ app.get('/polls/:id', function(request, response) {
 
     var host = request.protocol + '://' + request.get('host') + "/polls/"
 
-    poll.adminUrl = host + poll.adminString
-    poll.voterUrl = host + poll.voterString
+    formatData(poll, host);
 
-
-    poll.choices = poll.choices.split(',')
     response.render('poll', { poll: poll })
 
   });
 
 });
+
+function formatData(poll, host) {
+  poll.adminUrl = host + poll.adminString
+  poll.voterUrl = host + poll.voterString
+  poll.choices = poll.choices.split(',')
+
+  return poll;
+}
+
 
 var port   = process.env.PORT || 3000;
 var server = http.createServer(app).listen(port, function () {
