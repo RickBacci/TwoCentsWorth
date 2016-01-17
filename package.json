@@ -1,5 +1,5 @@
 {
-  "name": "crowdsource",
+  "name": "TwoCentsWorth",
   "version": "1.7.5",
   "description": "Crowdsourcing app for Module 4 at Turing school of software & design",
   "main": "client.js",
