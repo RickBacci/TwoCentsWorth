@@ -24,7 +24,12 @@ html(lang='en')
               ul.nav.navbar-nav.navbar-right
                 li
                   a(href='/') Home
-          h1#main.text-center Poll Show page
+          h1#main.text-center
+            #title
+              if type === 'admin'
+                p.text-center Admin Show Page
+              else
+                p.text-center Voter Show Page
           #poll-urls
             .well
               h3.text-center Admin Link

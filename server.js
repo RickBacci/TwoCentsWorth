@@ -31,13 +31,20 @@ app.post('/polls', function(request, response) {
 app.get('/polls/:id', function(request, response) {
   var id   = request.params.id;
 
-  var adminPoll = _.find(polls, function(poll) { return poll.adminString === id; });
-  var voterPoll = _.find(polls, function(poll) { return poll.voterString === id; });
+  var adminPoll = _.find(polls, function(poll) {
+    poll.urlType = 'admin';
+    return poll.adminString === id;
+  });
+
+  var voterPoll = _.find(polls, function(poll) {
+    poll.urlType = 'voter';
+    return poll.voterString === id;
+  });
 
   if (adminPoll) {
-    response.render('poll', { poll: adminPoll });
+    response.render('poll', { urlType: 'admin', poll: adminPoll });
   } else {
-    response.render('poll', { poll: voterPoll });
+    response.render('poll', { urlType: 'voter', poll: voterPoll });
   }
 });
 
