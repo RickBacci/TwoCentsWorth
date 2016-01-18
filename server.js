@@ -27,7 +27,7 @@ app.post('/polls', function(request, response) {
   var id          = '/poll/' + adminString + voterString;
   var poll        = new Poll(id, adminString, voterString, request);
 
-  redis.hmset('polls', poll)
+  storePoll(id, poll, redis);
 
   redis.hkeys('polls', function (err, keys) {
     keys.forEach(function (key) {
@@ -87,6 +87,11 @@ function configureRedis() {
     return redis;
   }
 }
+function storePoll(poll_id, poll, redis) {
+  redis.hmset(poll_id, poll)
+}
+
+
 // TODO move Poll to it's own file
 
 function Poll(poll_id, adminString, voterString, request) {
