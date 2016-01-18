@@ -52,8 +52,8 @@ html(lang='en')
                     each val, index in poll.choices
                       tr
                         td
-                          button.btn.btn-block.btn-default.button-choice(class='choice-' + index)=val
-                            span(class='tally-' + index).badge.pull-left 0
+                          button.btn.btn-block.btn-default(class='button-choice-' + index)=val
+                            span(class='poll-percentage-' + index).badge.pull-left 0
 
     <!-- script(src='/socket.io/socket.io.js') -->
 

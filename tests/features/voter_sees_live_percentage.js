@@ -6,8 +6,12 @@ module.exports = {
     makeChoices(client);
     submitForm(client);
 
+    client.expect.element('#main').to.contain.text('Admin Show Page');
+    client.expect.element('#main').to.not.contain.text('Voter Show Page');
+
     client.click('.voter-url').pause(1000);
 
+    client.expect.element('#main').to.not.contain.text('Admin Show Page');
     client.expect.element('#main').to.contain.text('Voter Show Page');
 
     client.expect.element('.admin-url').text.to.contain('localhost');
@@ -15,17 +19,18 @@ module.exports = {
 
     client.expect.element('#question').text.to.contain('Why?');
 
-    client.expect.element('.choice-0').text.to.contain('choiceA');
-    client.expect.element('.tally-0').text.to.contain('0');
+    client.expect.element('.button-choice-0').text.to.contain('choiceA');
+    client.expect.element('.button-choice-1').text.to.contain('choiceB');
+    client.expect.element('.button-choice-2').text.to.contain('choiceC');
+    client.expect.element('.button-choice-3').text.to.contain('choiceD');
 
-    client.expect.element('.choice-1').text.to.contain('choiceB');
-    client.expect.element('.tally-1').text.to.contain('0');
+    client.expect.element('.poll-percentage-0').text.to.contain('0');
+    client.expect.element('.poll-percentage-1').text.to.contain('0');
+    client.expect.element('.poll-percentage-2').text.to.contain('0');
+    client.expect.element('.poll-percentage-3').text.to.contain('0');
 
-    client.expect.element('.choice-2').text.to.contain('choiceC');
-    client.expect.element('.tally-2').text.to.contain('0');
-
-    client.expect.element('.choice-3').text.to.contain('choiceD');
-    client.expect.element('.tally-3').text.to.contain('0');
+    client.click('.button-choice-0')
+    client.expect.element('.poll-percentage-0').text.to.contain('100');
 
     client.end();
   }
