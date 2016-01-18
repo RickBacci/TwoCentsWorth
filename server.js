@@ -23,15 +23,14 @@ app.post('/polls', function(request, response) {
 
   var adminString = randomString();
   var voterString = randomString();
-  // var id          = adminString + voterString;
-  var id          = '/poll/' + adminString + voterString;
+  var id          = adminString + voterString;
   var poll        = new Poll(id, adminString, voterString, request);
 
   storePoll(id, poll, redis);
 
   logRedisKeys(redis);
 
-  response.redirect('/polls/' + adminString);
+  response.redirect('/polls/' + id);
 });
 
 app.get('/polls/:id', function(request, response) {
