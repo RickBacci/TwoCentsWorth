@@ -29,16 +29,7 @@ app.post('/polls', function(request, response) {
 
   storePoll(id, poll, redis);
 
-  redis.hkeys('polls', function (err, keys) {
-    keys.forEach(function (key) {
-      redis.hget(
-        'polls', key,
-        function(err, value) {
-          console.log(key + ': ' + value);
-        });
-    });
-    // redis.quit(); // TODO: find out if i need quit after every action
-  });
+  logRedisKeys(redis);
 
   response.redirect('/polls/' + adminString);
 });
@@ -87,6 +78,19 @@ function configureRedis() {
     return redis;
   }
 }
+
+function logRedisKeys(redis) {
+  redis.hkeys('polls', function (err, keys) {
+    keys.forEach(function (key) {
+      redis.hget(
+        'polls', key,
+        function(err, value) {
+          console.log(key + ': ' + value);
+        });
+    });
+  });
+}
+
 function storePoll(poll_id, poll, redis) {
   redis.hmset(poll_id, poll)
 }
