@@ -41,9 +41,13 @@ app.get('/polls/:id', function(request, response) {
   var adminString = id.substr(0, 16);
   var voterString = id.substr(17, 16);
 
-  // TODO use id to actually find what i'm looking for :)
+  // iterate over all of the polls in Redis and look for a match in the
+  // adminString or voterString if one is found then send back
+  // the id(both strings) and
+  // what that person is (admin or voter)
 
-  redis.hgetall("polls", function (err, poll) {
+  // then i will use the id to get the poll object
+
 
 
     formatData(poll, host);
