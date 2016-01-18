@@ -43,9 +43,20 @@ html(lang='en')
               p#question=poll.question
           .well
             #choices
-              each val, index in poll.choices
-                button.btn.btn-block.btn-default.button-choice(class='choice-' + index)=val
+              .table-responsive
+                table.table
+                  thead
+                    tr
+                      th.text-center Choices
+                  tbody
+                    each val, index in poll.choices
+                      tr
+                        td
+                          button.btn.btn-block.btn-default.button-choice(class='choice-' + index)=val
+                            span(class='tally-' + index).badge.pull-left 0
+
     <!-- script(src='/socket.io/socket.io.js') -->
+
     script(src='/client.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
