@@ -29,10 +29,10 @@ html(lang='en')
             .well
               h3.text-center Admin Link
                 p.text-center
-                a.admin-url(class='text-center', href= poll.adminUrl)=poll.adminUrl
+                  a.admin-url(class='text-center', href= poll.adminUrl)=poll.adminUrl
               h3.text-center Voter Link
                 p.text-center
-                a.voter-url(href= poll.voterUrl)=poll.voterUrl
+                  a.voter-url(href= poll.voterUrl)=poll.voterUrl
           .well.text-center
             .panel
               h3 Question
@@ -41,8 +41,10 @@ html(lang='en')
             #choices
               each val, index in poll.choices
                 button.btn.btn-block.btn-default.button-choice(class='choice-' + index)=val
-    script.
-      $('.uiButton').click(function() {
-          $(this).toggleClass("active");
-      });
+    <!-- script. -->
+    <!--   $('.uiButton').click(function() { -->
+    <!--       $(this).toggleClass("active"); -->
+    <!--   }); -->
+    <!-- script(src='/socket.io/socket.io.js') -->
+    script(src='/client.js')
     script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
