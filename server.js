@@ -6,13 +6,13 @@ var bodyParser   = require('body-parser');
 var redis        = configureRedis();
 
 
-redis.on("error", function (err) { console.log("Error " + err); });
 redis.on('connect', function() { console.log('Redis server connected'); });
+redis.on("error", function (err) { console.log("Error " + err); });
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.set('view engine', 'jade');
-
 app.use(express.static('public'));
+
+app.set('view engine', 'jade');
 
 app.get('/', function(request, response) {
   response.render('index')
