@@ -18,19 +18,14 @@ app.get('/', function(request, response) {
   response.render('index')
 });
 
+
 app.post('/polls', function(request, response) {
+
   var adminString = randomString();
   var voterString = randomString();
-
-  var poll = {
-    'pollType': request.body.polltype,
-    'status': 'open',
-    'adminString': adminString,
-    'voterString': voterString,
-    'question': request.body.question,
-    'choices': request.body.poll.choices,
-    'endTime': request.body.endtime
-  };
+  // var id          = adminString + voterString;
+  var id          = '/poll/' + adminString + voterString;
+  var poll        = new Poll(id, adminString, voterString, request);
 
   redis.hmset('polls', poll)
 
@@ -80,9 +75,6 @@ var server = http.createServer(app).listen(port, function () {
 });
 
 
-module.exports = server;
-
-
 
 function configureRedis() {
   if (process.env.REDISTOGO_URL) {
@@ -95,3 +87,23 @@ function configureRedis() {
     return redis;
   }
 }
+// TODO move Poll to it's own file
+
+function Poll(poll_id, adminString, voterString, request) {
+  this.pollId      = poll_id;
+  this.pollType    = request.body.polltype;
+  this.status      = 'open';
+  this.question    = request.body.question;
+  this.choices     = request.body.poll.choices;
+  this.endTime     = request.body.endtime;
+
+  this.adminString = adminString;
+  this.voterString = voterString;
+
+  this.adminUrl    = '/polls/' + adminString;
+  this.voterUrl    = '/polls/' + voterString;
+}
+
+
+
+module.exports = server;
