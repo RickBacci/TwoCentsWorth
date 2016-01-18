@@ -28,12 +28,8 @@ app.post('/polls', function(request, response) {
 
   storePoll(id, poll, redis);
 
-  logRedisKeys(redis);
-
-  response.redirect('/polls/' + id);
+  response.render('poll', { poll: poll });
 });
-
-
 
 app.get('/polls/:id', function(request, response) {
 
