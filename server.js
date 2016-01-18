@@ -25,30 +25,20 @@ app.post('/polls', function(request, response) {
 
   polls.push(poll);
 
-  // response.render('poll', { poll: poll });
   response.redirect(show);
 });
 
 app.get('/polls/:id', function(request, response) {
   var id   = request.params.id;
-  var poll;
 
-  poll = _.forEach(polls, function(val, i) {
-    if (id === val.adminString) {
-      val.urlType = 'admin';
-      console.log(val)
-      return val;
-    } else if( id === val.voterString) {
-      val.urlType = 'voter';
-      console.log(val)
-      return val;
-    } else {
-      console.log('URL not found.')
-    }
-    return val;
-  });
+  var adminPoll = _.find(polls, function(poll) { return poll.adminString === id; });
+  var voterPoll = _.find(polls, function(poll) { return poll.voterString === id; });
 
-  response.render('poll', { poll: poll });
+  if (adminPoll) {
+    response.render('poll', { poll: adminPoll });
+  } else {
+    response.render('poll', { poll: voterPoll });
+  }
 });
 
 
