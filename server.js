@@ -48,9 +48,11 @@ app.get('/polls/:id', function(request, response) {
 
   // then i will use the id to get the poll object
 
+  var poll;
 
+  redis.hgetall("polls", function (err, poll) {
 
-    formatData(poll, host);
+    formatData(poll, buildHostString(request));
 
     response.render('poll', { poll: poll })
 
