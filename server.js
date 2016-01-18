@@ -4,6 +4,7 @@ var app          = express();
 var randomString = require('./random-string');
 var bodyParser   = require('body-parser');
 var redis        = configureRedis();
+var Poll         = require('./poll');
 
 
 redis.on('connect', function() { console.log('Redis server connected'); });
