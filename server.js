@@ -41,7 +41,6 @@ app.get('/polls/:id', function(request, response) {
 
   redis.hgetall("polls", function (err, poll) {
 
-    var host = request.protocol + '://' + request.get('host') + "/polls/"
 
     formatData(poll, host);
 
@@ -50,6 +49,11 @@ app.get('/polls/:id', function(request, response) {
   });
 
 });
+
+function buildHostString(request) {
+  return request.protocol + '://' + request.get('host') + "/polls/"
+}
+
 
 function formatData(poll, host) {
   poll.adminUrl = host + poll.adminString
