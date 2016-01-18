@@ -108,8 +108,8 @@ function storePoll(poll_id, poll, redis) {
 
 // TODO move Poll to it's own file
 
-function Poll(poll_id, adminString, voterString, request) {
-  this.pollId      = poll_id;
+function Poll(id, adminString, voterString, request) {
+  this.id          = id;
   this.pollType    = request.body.polltype;
   this.status      = 'open';
   this.question    = request.body.question;
