@@ -41,10 +41,6 @@ html(lang='en')
             #choices
               each val, index in poll.choices
                 button.btn.btn-block.btn-default.button-choice(class='choice-' + index)=val
-    <!-- script. -->
-    <!--   $('.uiButton').click(function() { -->
-    <!--       $(this).toggleClass("active"); -->
-    <!--   }); -->
     <!-- script(src='/socket.io/socket.io.js') -->
     script(src='/client.js')
     script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')

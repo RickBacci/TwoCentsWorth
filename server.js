@@ -3,6 +3,7 @@ var express      = require('express');
 var app          = express();
 var randomString = require('./random-string');
 var bodyParser   = require('body-parser');
+var _            = require('lodash');
 var Poll         = require('./poll');
 
 var polls        = [];
@@ -17,36 +18,37 @@ app.get('/', function(request, response) {
   response.render('index')
 });
 
-
 app.post('/polls', function(request, response) {
+  var id   = randomString()
+  var poll = new Poll(id, request);
+  var show = '/polls/' + poll.id;
 
-  var adminString = randomString();
-  var voterString = randomString();
-  var id          = adminString + voterString;
-  var poll        = new Poll(id, adminString, voterString, request);
+  polls.push(poll);
 
-  response.render('poll', { poll: poll });
+  // response.render('poll', { poll: poll });
+  response.redirect(show);
 });
 
 app.get('/polls/:id', function(request, response) {
-
-  var id = request.params.id;
-  var adminString = id.substr(0, 16);
-  var voterString = id.substr(17, 16);
-
-  // iterate over all of the polls in Redis and look for a match in the
-  // adminString or voterString if one is found then send back
-  // the id(both strings) and
-  // what that person is (admin or voter)
-
-  // then i will use the id to get the poll object
-
+  var id   = request.params.id;
   var poll;
 
-    response.render('poll', { poll: poll })
-
+  poll = _.forEach(polls, function(val, i) {
+    if (id === val.adminString) {
+      val.urlType = 'admin';
+      console.log(val)
+      return val;
+    } else if( id === val.voterString) {
+      val.urlType = 'voter';
+      console.log(val)
+      return val;
+    } else {
+      console.log('URL not found.')
+    }
+    return val;
   });
 
+  response.render('poll', { poll: poll });
 });
 
 
