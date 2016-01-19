@@ -5,7 +5,6 @@ html(lang='en')
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     style.
       .btn-choice:active, .active {
         background-color:blue;
@@ -24,14 +23,19 @@ html(lang='en')
               ul.nav.navbar-nav.navbar-right
                 li
                   a(href='/') Home
-          h1.text-center Poll Show page
+          h1#poll.text-center(data-id=poll.id)
+            #title
+              if urlType === 'admin'
+                p.text-center Admin Show Page
+              else
+                p.text-center Voter Show Page
           #poll-urls
             .well
               h3.text-center Admin Link
-                p.text-center
-                a.admin-url(class='text-center', href= poll.adminUrl)=poll.adminUrl
+              p.text-center
+                a.admin-url(href= poll.adminUrl)=poll.adminUrl
               h3.text-center Voter Link
-                p.text-center
+              p.text-center
                 a.voter-url(href= poll.voterUrl)=poll.voterUrl
           .well.text-center
             .panel
@@ -39,10 +43,25 @@ html(lang='en')
               p#question=poll.question
           .well
             #choices
-              each val, index in poll.choices
-                button.btn.btn-block.btn-default.button-choice(class='choice-' + index)=val
-    script.
-      $('.uiButton').click(function() {
-          $(this).toggleClass("active");
-      });
+              .table-responsive
+                table.table
+                  thead
+                    tr
+                      th.text-center Choices
+                  tbody#choices-buttons
+                    each val, index in poll.choices
+                      tr
+                        td
+                          button.btn.btn-block.btn-default.choices(data-val=index, class='choice-' + index)=val
+                            span(id='percentage-' + index).badge.pull-left 0
+            br
+            span#connection-count
+            br
+            span#status-message
+            br
+            span#your-vote
+            br
+    script(src='/socket.io/socket.io.js')
+    script(src='/client.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')

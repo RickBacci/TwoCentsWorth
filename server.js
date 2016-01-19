@@ -3,81 +3,50 @@ var express      = require('express');
 var app          = express();
 var randomString = require('./random-string');
 var bodyParser   = require('body-parser');
+var _            = require('lodash');
+var Poll         = require('./poll');
+const socketIo   = require('socket.io');
 
-if (process.env.REDISTOGO_URL) {
-  var rtg   = require("url").parse(process.env.REDISTOGO_URL);
-  var redis = require("redis").createClient(rtg.port, rtg.hostname);
-  redis.auth(rtg.auth.split(":")[1]);
-} else {
-  var redis = require("redis").createClient();
-}
-
-redis.on("error", function (err) { console.log("Error " + err); });
-redis.on('connect', function() { console.log('Redis server connected'); });
+var polls        = [];
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.set('view engine', 'jade');
-
 app.use(express.static('public'));
+
+app.set('view engine', 'jade');
 
 app.get('/', function(request, response) {
   response.render('index')
 });
 
 app.post('/polls', function(request, response) {
-  var adminString = randomString();
-  var voterString = randomString();
+  var id   = randomString()
+  var poll = new Poll(id, request);
+  var show = '/polls/' + poll.id;
 
-  var poll = {
-    'pollType': request.body.polltype,
-    'status': 'open',
-    'adminString': adminString,
-    'voterString': voterString,
-    'question': request.body.question,
-    'choices': request.body.poll.choices,
-    'endTime': request.body.endtime
-  };
+  polls.push(poll);
 
-  redis.hmset('polls', poll)
-
-  redis.hkeys('polls', function (err, keys) {
-    keys.forEach(function (key) {
-      redis.hget(
-        'polls', key,
-        function(err, value) {
-          console.log(key + ': ' + value);
-        });
-    });
-    // redis.quit(); // TODO: find out if i need quit after every action
-  });
-
-  response.redirect('/polls/' + adminString);
+  response.redirect(show);
 });
 
 app.get('/polls/:id', function(request, response) {
-  var id = request.params.id;
+  var id   = request.params.id;
 
-  // TODO use id to actually find what i'm looking for :)
-
-  redis.hgetall("polls", function (err, poll) {
-
-    var host = request.protocol + '://' + request.get('host') + "/polls/"
-
-    formatData(poll, host);
-
-    response.render('poll', { poll: poll })
-
+  var adminPoll  = _.find(polls, function(poll) {
+    poll.urlType = 'admin';
+    return poll.adminString === id;
   });
 
+  var voterPoll  = _.find(polls, function(poll) {
+    poll.urlType = 'voter';
+    return poll.voterString === id;
+  });
+
+  if (adminPoll) {
+    response.render('poll', { urlType: 'admin', poll: adminPoll });
+  } else {
+    response.render('poll', { urlType: 'voter', poll: voterPoll });
+  }
 });
-
-function formatData(poll, host) {
-  poll.adminUrl = host + poll.adminString
-  poll.voterUrl = host + poll.voterString
-  poll.choices = poll.choices.split(',')
-
-  return poll;
-}
 
 
 var port   = process.env.PORT || 3000;
@@ -85,5 +54,42 @@ var server = http.createServer(app).listen(port, function () {
   console.log('Listening on port ' + port + '.');
 });
 
+const io   = socketIo(server);
+
+io.on('connection', function (socket) {
+  var totalClients = io.engine.clientsCount;
+  var welcomeMsg   = 'Give us your TwoCentsWorth!'
+
+  console.log('A user has connected.', totalClients);
+  io.sockets.emit('usersConnected', totalClients);
+  socket.emit('statusMessage', welcomeMsg);
+
+  socket.on('message', function (channel, message) {
+    if (channel === 'voteCast') {
+      var currentPoll = _.find(polls, function(poll) {
+        poll.id       = message.url;
+        return poll;
+      });
+      var socketId = socket.id.slice(2, 22);
+      currentPoll.votes[socketId] = message;
+
+      for (vote in currentPoll.votes) {
+        currentPoll.voteCount[currentPoll.votes[vote].vote]++;
+      }
+      console.log(currentPoll.voteCount)
+
+      socket.emit('voteCount', currentPoll.voteCount);
+      io.sockets.emit('voteCount', currentPoll.voteCount);
+    }
+
+  });
+
+  socket.on('disconnect', function () {
+    console.log('A user has disconnected.', totalClients);
+    // delete currentPoll.voteCount[socket.id.slice(2, 22)];
+    io.sockets.emit('usersConnected', totalClients);
+  });
+
+});
 
 module.exports = server;
