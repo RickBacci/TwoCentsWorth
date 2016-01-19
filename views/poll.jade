@@ -23,7 +23,7 @@ html(lang='en')
               ul.nav.navbar-nav.navbar-right
                 li
                   a(href='/') Home
-          h1#poll.text-center(data-id= poll.id)
+          h1#poll.text-center(data-id=poll.id)
             #title
               if urlType === 'admin'
                 p.text-center Admin Show Page
@@ -52,7 +52,7 @@ html(lang='en')
                     each val, index in poll.choices
                       tr
                         td
-                          button.btn.btn-block.btn-default.choices(class='choice-' + index)=val
+                          button.btn.btn-block.btn-default.choices(data-val=index, class='choice-' + index)=val
                             span(class='percentage-' + index).badge.pull-left 0
             br
             span#connection-count
