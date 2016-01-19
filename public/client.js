@@ -22,3 +22,17 @@ for (var i = 0; i < buttons.length; i++) {
     socket.send('voteCast', ballot);
   });
 }
+
+var total0 = document.getElementById('percentage-0') || 0;
+var total1 = document.getElementById('percentage-1') || 0;
+var total2 = document.getElementById('percentage-2') || 0;
+var total3 = document.getElementById('percentage-3') || 0;
+
+socket.on('voteCount', function(votes) {
+  total0.innerText = votes['0'];
+  total1.innerText = votes['1'];
+  total2.innerText = votes['2'];
+  total3.innerText = votes['3'];
+});
+
+
