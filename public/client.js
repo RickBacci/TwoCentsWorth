@@ -31,10 +31,10 @@ var total3 = document.getElementById('percentage-3');
 socket.on('voteCount', function(votes) {
   var totalVotes = votes['0'] + votes['1'] + votes['2'] + votes['3'];
 
-  total0.innerText = calculatePercent(votes['0'], totalVotes);
-  total1.innerText = calculatePercent(votes['1'], totalVotes);
-  total2.innerText = calculatePercent(votes['2'], totalVotes);
-  total3.innerText = calculatePercent(votes['3'], totalVotes);
+  $('#percentage-0').text(calculatePercent(votes['0'], totalVotes));
+  $('#percentage-1').text(calculatePercent(votes['1'], totalVotes));
+  $('#percentage-2').text(calculatePercent(votes['2'], totalVotes));
+  $('#percentage-3').text(calculatePercent(votes['3'], totalVotes));
 
   function calculatePercent(votes, totalVotes){
     if (!isFinite(votes / totalVotes) * 100){

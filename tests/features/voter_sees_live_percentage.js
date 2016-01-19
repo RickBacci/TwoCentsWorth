@@ -21,7 +21,7 @@ module.exports = {
 
     checkCorrectChoicesEntered(client);
 
-    client.click('.choice-0');
+    client.click('#percentage-0');
 
     client.expect.element('#percentage-0').text.to.contain('100');
 
@@ -66,8 +66,8 @@ function checkCorrectChoicesEntered(client) {
 }
 
 function percentagesStartAt0(client) {
-  client.expect.element('.percentage-0').text.to.contain('0');
-  client.expect.element('.percentage-1').text.to.contain('0');
-  client.expect.element('.percentage-2').text.to.contain('0');
-  client.expect.element('.percentage-3').text.to.contain('0');
+  client.expect.element('#percentage-0').text.to.contain('0');
+  client.expect.element('#percentage-1').text.to.contain('0');
+  client.expect.element('#percentage-2').text.to.contain('0');
+  client.expect.element('#percentage-3').text.to.contain('0');
 }
