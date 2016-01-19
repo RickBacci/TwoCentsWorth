@@ -13,6 +13,7 @@ module.exports = function Poll(id, request) {
   this.adminUrl    = this.hostname + '/polls/' + this.id;
   this.voterUrl    = this.hostname + '/polls/' + this.voterString;
   this.votes       = {};
+  this.voteCount   = { '0':0, '1':0, '2':0, '3':0 };
 };
 
 
