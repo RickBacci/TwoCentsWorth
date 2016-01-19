@@ -5,9 +5,9 @@ var randomString = require('./random-string');
 var bodyParser   = require('body-parser');
 var _            = require('lodash');
 var Poll         = require('./poll');
+const socketIo   = require('socket.io');
 
 var polls        = [];
-
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
@@ -54,5 +54,22 @@ var server = http.createServer(app).listen(port, function () {
   console.log('Listening on port ' + port + '.');
 });
 
+const io   = socketIo(server);
+
+io.on('connection', function (socket) {
+  var totalClients = io.engine.clientsCount;
+  var welcomeMsg   = 'Give us your TwoCentsWorth!'
+
+  console.log('A user has connected.', totalClients);
+
+  io.sockets.emit('usersConnected', totalClients);
+  socket.emit('statusMessage', welcomeMsg);
+
+  socket.on('disconnect', function () {
+    console.log('A user has disconnected.', totalClients);
+    io.sockets.emit('usersConnected', totalClients);
+  });
+
+});
 
 module.exports = server;

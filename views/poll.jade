@@ -23,7 +23,7 @@ html(lang='en')
               ul.nav.navbar-nav.navbar-right
                 li
                   a(href='/') Home
-          h1#main.text-center
+          h1#poll.text-center(data-id='' + poll.id)
             #title
               if urlType === 'admin'
                 p.text-center Admin Show Page
@@ -32,11 +32,11 @@ html(lang='en')
           #poll-urls
             .well
               h3.text-center Admin Link
-                p.text-center
-                  a.admin-url(href= poll.adminUrl)=poll.adminUrl
+              p.text-center
+                a.admin-url(href= poll.adminUrl)=poll.adminUrl
               h3.text-center Voter Link
-                p.text-center
-                  a.voter-url(href= poll.voterUrl)=poll.voterUrl
+              p.text-center
+                a.voter-url(href= poll.voterUrl)=poll.voterUrl
           .well.text-center
             .panel
               h3 Question
@@ -48,15 +48,20 @@ html(lang='en')
                   thead
                     tr
                       th.text-center Choices
-                  tbody
+                  tbody#choices-buttons
                     each val, index in poll.choices
                       tr
                         td
-                          button.btn.btn-block.btn-default(class='button-choice-' + index)=val
-                            span(class='poll-percentage-' + index).badge.pull-left 0
-
-    <!-- script(src='/socket.io/socket.io.js') -->
-
+                          button.btn.btn-block.btn-default.choices(class='choice-' + index)=val
+                            span(class='percentage-' + index).badge.pull-left 0
+            br
+            span#connection-count
+            br
+            span#status-message
+            br
+            span#your-vote
+            br
+    script(src='/socket.io/socket.io.js')
     script(src='/client.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')

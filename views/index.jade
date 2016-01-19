@@ -44,7 +44,11 @@ html(lang='en')
             .form-group
               input#choice-D.form-control(name='poll[choices][]', placeholder='Enter choice')
             button#submit-poll.btn.btn-default.pull-right(type='submit') Submit Poll
-    <!-- script(src='/socket.io/socket.io.js') -->
+            br
+            span#connection-count
+            br
+            span#status-message
+    script(src='/socket.io/socket.io.js')
     script(src='/client.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
