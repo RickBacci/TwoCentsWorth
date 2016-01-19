@@ -5,7 +5,6 @@ var statusMessage   = document.getElementById('status-message');
 var buttons         = document.querySelectorAll('.choices');
 var pollId          = document.getElementById('poll');
 
-
 socket.on('usersConnected', function(count) {
   connectionCount.innerText = 'Connected Users: ' + count;
 });

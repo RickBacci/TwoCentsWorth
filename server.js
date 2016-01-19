@@ -61,12 +61,8 @@ io.on('connection', function (socket) {
   var welcomeMsg   = 'Give us your TwoCentsWorth!'
 
   console.log('A user has connected.', totalClients);
-
   io.sockets.emit('usersConnected', totalClients);
   socket.emit('statusMessage', welcomeMsg);
-
-
-
 
   socket.on('message', function (channel, message) {
     if (channel === 'voteCast') {
