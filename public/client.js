@@ -16,10 +16,10 @@ socket.on('statusMessage', function(message) {
 
 for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('click', function() {
-    var x          = 0;
-    var ballot     = { vote: {}, url: pollId.dataset.id, socketId: socket.id };
-    ballot.vote[x] = this.innerText; x++;
-
+    var ballot            = { 'vote': {}, 'url': pollId.dataset.id };
+    var socketId          = socket.id.toString();
+    ballot.vote[socketId] = this.dataset.val;
+    console.log(this.dataset.val);
     socket.send('voteCast', ballot);
   });
 }

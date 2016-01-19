@@ -12,7 +12,7 @@ module.exports = function Poll(id, request) {
   this.hostname    = request.protocol + '://' + request.get('host');
   this.adminUrl    = this.hostname + '/polls/' + this.id;
   this.voterUrl    = this.hostname + '/polls/' + this.voterString;
-  this.votes       = [];
+  this.votes       = {};
 };
 
 
