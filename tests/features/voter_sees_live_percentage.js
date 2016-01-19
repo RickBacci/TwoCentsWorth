@@ -1,5 +1,5 @@
 module.exports = {
-  'Voter can see percentages' : function (client) {
+  'Voter can see live updates' : function (client) {
 
     visitRoot(client);
     checkTitle(client);
@@ -23,12 +23,12 @@ module.exports = {
 
     client.click('.choice-0');
 
-    client.expect.element('.percentage-0').text.to.contain('100');
+    client.expect.element('#percentage-0').text.to.contain('100');
 
     client.click('.choice-1');
 
-    client.expect.element('.percentage-0').text.to.not.contain('100');
-    client.expect.element('.percentage-1').text.to.contain('100');
+    client.expect.element('#percentage-0').text.to.contain('50');
+    client.expect.element('#percentage-1').text.to.contain('50');
 
     client.end();
   }
