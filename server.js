@@ -70,37 +70,26 @@ io.on('connection', function (socket) {
         poll.id       = message.url;
         return poll;
       });
+      var socketId = socket.id.slice(2, 22);
+      currentPoll.votes[socketId] = message;
 
-      console.log(message.vote)
-      currentPoll.votes[message.vote] = message.vote;
+      for (vote in currentPoll.votes) {
+        currentPoll.voteCount[currentPoll.votes[vote].vote]++;
+      }
+      console.log(currentPoll.voteCount)
 
-      var total = countVotes(currentPoll.votes[message.vote])
-      console.log(total)
-
-      socket.emit('voteCount', countVotes(currentPoll.votes[message.vote]));
-      io.sockets.emit('voteCount', countVotes(currentPoll.votes[message.vote]));
+      socket.emit('voteCount', currentPoll.voteCount);
+      io.sockets.emit('voteCount', currentPoll.voteCount);
     }
 
   });
-
-  function countVotes(votes) {
-    var voteCount = {
-      '0': 0,
-      '1': 0,
-      '2': 0,
-      '3': 0
-    };
-
-    for (vote in votes) {
-      voteCount[votes[vote]]++
-    }
-    return voteCount;
-  }
 
   socket.on('disconnect', function () {
     console.log('A user has disconnected.', totalClients);
+    // delete currentPoll.voteCount[socket.id.slice(2, 22)];
     io.sockets.emit('usersConnected', totalClients);
   });
+
 });
 
 module.exports = server;
