@@ -15,11 +15,11 @@ socket.on('statusMessage', function(message) {
 
 for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('click', function() {
-    var ballot            = { 'vote': {}, 'url': pollId.dataset.id };
-    var socketId          = socket.id.toString();
-    ballot.vote[socketId] = this.dataset.val;
-    console.log(this.dataset.val);
-    socket.send('voteCast', ballot);
+    var message = {
+      'vote': this.dataset.val,
+      'url': pollId.dataset.id
+    }
+    socket.send('voteCast', message);
   });
 }
 
