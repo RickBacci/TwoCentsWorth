@@ -29,10 +29,12 @@ var total2 = document.getElementById('percentage-2') || 0;
 var total3 = document.getElementById('percentage-3') || 0;
 
 socket.on('voteCount', function(votes) {
-  total0.innerText = votes['0'];
-  total1.innerText = votes['1'];
-  total2.innerText = votes['2'];
-  total3.innerText = votes['3'];
+  total0.innerText = (100 / votes['0']);
+  total1.innerText = (100 / votes['1']);
+  total2.innerText = (100 / votes['2']);
+  total3.innerText = (100 / votes['3']);
 });
+
+
 
 
