@@ -23,44 +23,69 @@ html(lang='en')
               ul.nav.navbar-nav.navbar-right
                 li
                   a(href='/') Home
-          h1#poll.text-center(data-id=poll.id)
-            #title
+          #poll.text-center(data-id=poll.id)
+            h1#title
               if urlType === 'admin'
                 p.text-center Admin Show Page
+                h3.text-center=poll.pollType
+                button#toggle-poll-status=poll.status
               else
                 p.text-center Voter Show Page
-          #poll-urls
-            .well
-              h3.text-center Admin Link
-              p.text-center
-                a.admin-url(href= poll.adminUrl)=poll.adminUrl
-              h3.text-center Voter Link
-              p.text-center
-                a.voter-url(href= poll.voterUrl)=poll.voterUrl
-          .well.text-center
-            .panel
-              h3 Question
-              p#question=poll.question
-          .well
-            #choices
-              .table-responsive
-                table.table
-                  thead
-                    tr
-                      th.text-center Choices
-                  tbody#choices-buttons
-                    each val, index in poll.choices
-                      tr
-                        td
-                          button.btn.btn-block.btn-default.choices(data-val=index, class='choice-' + index)=val
-                            span(id='percentage-' + index).badge.pull-left 0
-            br
-            span#connection-count
-            br
-            span#status-message
-            br
-            span#your-vote
-            br
+                #toggle-poll-status=poll.status
+            .well#poll-urls
+              if urlType === 'admin'
+                h3.text-center Admin Link
+                p.text-center
+                  a.admin-url(href= poll.adminUrl)=poll.adminUrl
+                h3.text-center Voter Link
+                p.text-center
+                  a.voter-url(href= poll.voterUrl)=poll.voterUrl
+                .text-center
+                  =poll.type
+              .well.text-center
+                h3 Question
+                p#question=poll.question
+                if poll.status === 'open'
+                  #choices
+                    .table-responsive
+                      table.table
+                        thead
+                          tr
+                            th.text-center Choices
+                        tbody#choices-buttons
+                          each val, index in poll.choices
+                            tr
+                              td
+                                button.btn.btn-block.btn-default.choices(data-val=index, class='choice-' + index)=val
+                                  if urlType === 'admin'
+                                    span(id='percentage-' + index).badge.pull-left 0
+                                  else
+                                    if poll.pollType === 'Public'
+                                      span(id='percentage-' + index).badge.pull-left 0
+                else
+                  #closed-choices
+                    .table-responsive
+                      table.table
+                        thead
+                          tr
+                            th.text-center Choices
+                        tbody#closed-choices-buttons
+                          each val, index in poll.choices
+                            tr
+                              td=val
+                                if urlType === 'admin'
+                                  span(id='percentage-' + index).badge.pull-left 0
+                                else
+                                  if poll.pollType === 'Public'
+                                    span(id='percentage-' + index).badge.pull-left 0
+
+          br
+          span#connection-count
+          br
+          span#status-message
+          br
+          span#your-vote
+          br
     script(src='/socket.io/socket.io.js')
     script(src='/client.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')

@@ -4,6 +4,7 @@ var connectionCount = document.getElementById('connection-count');
 var statusMessage   = document.getElementById('status-message');
 var buttons         = document.querySelectorAll('.choices');
 var pollId          = document.getElementById('poll');
+var pollStatus      = document.getElementById('toggle-poll-status');
 
 socket.on('usersConnected', function(count) {
   connectionCount.innerText = 'Connected Users: ' + count;
@@ -22,6 +23,16 @@ for (var i = 0; i < buttons.length; i++) {
     socket.send('voteCast', message);
   });
 }
+
+
+pollStatus.addEventListener('click', function() {
+    var message = {
+      'url':    pollId.dataset.id,
+      'status': pollStatus.innerText
+    };
+    console.log(message)
+    socket.send('togglePollStatus', message);
+})
 
 var total0 = document.getElementById('percentage-0');
 var total1 = document.getElementById('percentage-1');
@@ -47,12 +58,10 @@ socket.on('voteCount', function(votes) {
 });
 
 
-
-
-
-
-
-
+socket.on('togglePollStatus', function(status) {
+  $('#toggle-poll-status').text(status)
+  console.log('socket id in client: ' + socket.id);
+});
 
 
 

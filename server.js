@@ -68,6 +68,8 @@ io.on('connection', function (socket) {
       });
 
       var socketId = socket.id.slice(2, 22);
+      console.log('socket id in server: ' + socketId);
+
       currentPoll.votes[socketId] = message;
 
       for (vote in currentPoll.votes) {
@@ -79,6 +81,28 @@ io.on('connection', function (socket) {
       io.sockets.emit('voteCount', currentPoll.voteCount);
     }
 
+    if (channel === 'togglePollStatus') {
+      var currentPoll = _.find(polls, function(poll) {
+        poll.id       = message.url;
+        return poll;
+      });
+
+      if (message.status === 'open') {
+        currentPoll.status = 'closed'
+      } else {
+        currentPoll.status = 'open'
+      }
+
+      socket.emit('togglePollStatus', currentPoll.status);
+      io.sockets.emit('togglePollStatus', currentPoll.status);
+    }
+
+
+  });
+
+  socket.on('togglePollStatus', function (message) {
+    console.log('Poll status changed!', message);
+    io.sockets.emit('togglePollStatus', status);
   });
 
   socket.on('disconnect', function () {
