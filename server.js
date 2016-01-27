@@ -6,12 +6,14 @@ var bodyParser   = require('body-parser');
 var _            = require('lodash');
 var Poll         = require('./poll');
 const socketIo   = require('socket.io');
-
 var polls        = [];
+var port         = process.env.PORT || 3000;
+var server       = http.createServer(app).listen(port, function () {
+  console.log('Listening on port ' + port + '.');
+});
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
-
 app.set('view engine', 'jade');
 
 app.get('/', function(request, response) {
@@ -29,8 +31,7 @@ app.post('/polls', function(request, response) {
 });
 
 app.get('/polls/:id', function(request, response) {
-  var id   = request.params.id;
-
+  var id         = request.params.id;
   var adminPoll  = _.find(polls, function(poll) {
     poll.urlType = 'admin';
     return poll.adminString === id;
@@ -49,11 +50,6 @@ app.get('/polls/:id', function(request, response) {
 });
 
 
-var port   = process.env.PORT || 3000;
-var server = http.createServer(app).listen(port, function () {
-  console.log('Listening on port ' + port + '.');
-});
-
 const io   = socketIo(server);
 
 io.on('connection', function (socket) {
@@ -70,6 +66,7 @@ io.on('connection', function (socket) {
         poll.id       = message.url;
         return poll;
       });
+
       var socketId = socket.id.slice(2, 22);
       currentPoll.votes[socketId] = message;
 
@@ -86,6 +83,7 @@ io.on('connection', function (socket) {
 
   socket.on('disconnect', function () {
     console.log('A user has disconnected.', totalClients);
+
     // delete currentPoll.voteCount[socket.id.slice(2, 22)];
     io.sockets.emit('usersConnected', totalClients);
   });
