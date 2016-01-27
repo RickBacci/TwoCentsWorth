@@ -1,5 +1,5 @@
 module.exports = function Poll(id, request) {
-  this.id          = id.substr(0, 16);
+  this.id          = id.substr(0, 20);
   this.pollType    = request.body.polltype || 'Public'
   this.status      = 'open';
   this.question    = request.body.question || "Is this a question?";
@@ -7,7 +7,7 @@ module.exports = function Poll(id, request) {
   this.endTime     = request.body.endtime || "none";
 
   this.adminString = this.id;
-  this.voterString = id.substr(17, 16);
+  this.voterString = id.substr(20, 20);
 
   this.hostname    = request.protocol + '://' + request.get('host');
   this.adminUrl    = this.hostname + '/polls/' + this.id;
